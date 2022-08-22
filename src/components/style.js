@@ -47,6 +47,32 @@ export const Input = styled.input`
   }
 `;
 
+export const Label = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  input[type="file"] {
+    display: none;
+  }
+
+  span svg {
+    font-size: 30px;
+    color: #1678ed;
+  }
+`;
+
+export const UploadIcon = styled.div`
+  border: 2px solid;
+  padding: 5px 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  :hover {
+    color: #1678ed;
+  }
+`;
+
 export const SearchMovies = styled.div`
   width: 50%;
 `;

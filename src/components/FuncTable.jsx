@@ -1,5 +1,6 @@
 import React from "react";
 import { data } from "../data";
+import { TbCloudUpload } from "react-icons/tb";
 import { useState } from "react";
 import {
   AddInputWrapper,
@@ -7,8 +8,10 @@ import {
   Container,
   Image,
   Input,
+  Label,
   SearchMovies,
   TableBtnWrapper,
+  UploadIcon,
   Wrapper,
 } from "./style";
 
@@ -19,17 +22,23 @@ const FuncTable = () => {
   const [nameValue, setNameValue] = useState("");
   const [newInputValue, setNewInputValue] = useState("");
   const [select, setSelect] = useState(null);
-  const [file, setFile] = useState();
-  const [newImgValue, setNewImgValue] = useState();
+  const [file, setFile] = useState("");
+  const [newImgValue, setNewImgValue] = useState("");
 
   const SaveMovie = () => {
     let savedMovies = movies.map((value) =>
       value.id === select?.id
-        ? { ...value, url: newImgValue, name: newInputValue }
+        ? {
+            ...value,
+            url: newImgValue <= 0 ? select.url : newImgValue,
+            name: newInputValue <= 0 ? select.name : newInputValue,
+          }
         : value
     );
     setMovies(savedMovies);
     setSelect(null);
+    setFile(null);
+    setNewImgValue(null);
   };
 
   const AddImage = (e) => {
@@ -50,8 +59,8 @@ const FuncTable = () => {
       ...movies,
       { id: movies.length + 1, url: file, name: nameValue },
     ]);
+    setFile(null);
     setNameValue("");
-    setFile();
   };
 
   const EditMovie = (value) => {
@@ -78,12 +87,19 @@ const FuncTable = () => {
         <AddInputWrapper>
           {openInput ? (
             <AddInputWrapper>
-              <Input
-                type="file"
-                placeholder="Add Image..."
-                filename={file}
-                onChange={AddImage}
-              />
+              <Label>
+                <Input
+                  borderNone
+                  id="file"
+                  type="file"
+                  placeholder="Add Image..."
+                  filename={file}
+                  onChange={AddImage}
+                />
+                <UploadIcon>
+                  <TbCloudUpload />
+                </UploadIcon>
+              </Label>
               <Input
                 type="text"
                 placeholder="Add Name..."
@@ -120,19 +136,28 @@ const FuncTable = () => {
               (value, index) =>
                 value.name.toLowerCase().includes(searchVal.toLowerCase()) && (
                   <tr key={index}>
-                    <td>{value.id}</td>
+                    <td>{index + 1}</td>
                     <td>
                       {select?.id == value.id ? (
-                        <Input
-                          type="file"
-                          placeholder="Add Image..."
-                          filename={file}
-                          onChange={(e) =>
-                            setNewImgValue(
-                              URL.createObjectURL(e.target.files[0])
-                            )
-                          }
-                        />
+                        <>
+                          <Label>
+                            <Input
+                              borderNone
+                              id="file"
+                              type="file"
+                              placeholder="Add Image..."
+                              filename={file}
+                              onChange={(e) =>
+                                setNewImgValue(
+                                  URL.createObjectURL(e.target.files[0])
+                                )
+                              }
+                            />
+                            <UploadIcon>
+                              <TbCloudUpload />
+                            </UploadIcon>
+                          </Label>
+                        </>
                       ) : (
                         <Image src={value.url} />
                       )}
