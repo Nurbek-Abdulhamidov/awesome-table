@@ -73,6 +73,12 @@ export const UploadIcon = styled.div`
   }
 `;
 
+export const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const SearchMovies = styled.div`
   width: 50%;
 `;

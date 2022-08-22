@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   Image,
+  ImageWrapper,
   Input,
   Label,
   SearchMovies,
@@ -58,7 +59,7 @@ const FuncTable = () => {
       ...movies,
       { id: movies.length + 1, url: file, name: nameValue },
     ]);
-    setFile(null);
+    setFile("");
     setNameValue("");
   };
 
@@ -88,19 +89,29 @@ const FuncTable = () => {
         <AddInputWrapper>
           {openInput ? (
             <AddInputWrapper>
-              <Label>
-                <Input
-                  borderNone
-                  id="file"
-                  type="file"
-                  placeholder="Add Image..."
-                  filename={file}
-                  onChange={AddImage}
-                />
-                <UploadIcon>
-                  <TbCloudUpload />
-                </UploadIcon>
-              </Label>
+              <>
+                {file.length <= 0 ? (
+                  <Label>
+                    <Input
+                      borderNone
+                      id="file"
+                      type="file"
+                      placeholder="Add Image..."
+                      filename={file}
+                      onChange={AddImage}
+                    />
+
+                    <UploadIcon>
+                      <TbCloudUpload />
+                    </UploadIcon>
+                  </Label>
+                ) : (
+                  <ImageWrapper>
+                    <Image src={file} />
+                  </ImageWrapper>
+                )}
+              </>
+
               <Input
                 type="text"
                 placeholder="Add Name..."
