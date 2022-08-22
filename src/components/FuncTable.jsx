@@ -36,9 +36,8 @@ const FuncTable = () => {
         : value
     );
     setMovies(savedMovies);
-    setSelect(null);
-    setFile(null);
-    setNewImgValue(null);
+    setSelect("");
+    setNewImgValue("");
   };
 
   const AddImage = (e) => {
@@ -65,10 +64,12 @@ const FuncTable = () => {
 
   const EditMovie = (value) => {
     setSelect(value);
+    setNewImgValue("");
   };
 
   const CancelEdit = () => {
     setSelect(null);
+    setNewImgValue("");
   };
 
   return (
@@ -140,23 +141,28 @@ const FuncTable = () => {
                     <td>
                       {select?.id == value.id ? (
                         <>
-                          <Label>
-                            <Input
-                              borderNone
-                              id="file"
-                              type="file"
-                              placeholder="Add Image..."
-                              filename={file}
-                              onChange={(e) =>
-                                setNewImgValue(
-                                  URL.createObjectURL(e.target.files[0])
-                                )
-                              }
-                            />
-                            <UploadIcon>
-                              <TbCloudUpload />
-                            </UploadIcon>
-                          </Label>
+                          {newImgValue.length <= 0 ? (
+                            <Label>
+                              <Input
+                                borderNone
+                                id="file"
+                                type="file"
+                                placeholder="Add Image..."
+                                filename={file}
+                                onChange={(e) =>
+                                  setNewImgValue(
+                                    URL.createObjectURL(e.target.files[0])
+                                  )
+                                }
+                              />
+
+                              <UploadIcon>
+                                <TbCloudUpload />
+                              </UploadIcon>
+                            </Label>
+                          ) : (
+                            <Image src={newImgValue} />
+                          )}
                         </>
                       ) : (
                         <Image src={value.url} />
